@@ -1,35 +1,37 @@
-name: Maven Package
+name: Build and Test with H2 Database
 
 on:
   push:
     branches:
       - master
-  release:
-    types: [created]
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
-    - uses: actions/checkout@v4
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        server-id: github
-        settings-path: $GITHUB_WORKSPACE/.github/settings.xml
+      # 2. Configurar JDK
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Build with Maven
-      run: mvn -B package -DskipTests --file pom.xml
+      # 3. Construir y ejecutar las pruebas con Maven
+      - name: Build and Test with Maven
+        run: mvn clean verify -DskipTests=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Publish to GitHub Packages Apache Maven
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml
+      # 4. Publicar en GitHub Packages (opcional)
+      - name: Publish to GitHub Packages
+        run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
