@@ -18,7 +18,7 @@
     </properties>
     <distributionManagement>
         <repository>
-            <id>${{ github.actor }}</id>
+            <id>github</id>
             <url>https://maven.pkg.github.com/martinsecchi/api</url>
         </repository>
     </distributionManagement>
