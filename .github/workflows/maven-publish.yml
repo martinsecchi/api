@@ -55,3 +55,6 @@ jobs:
         with:
           name: api
           path: target/api-${{ env.VERSION }}.jar
+
+      - name: Check updated version in pom.xml
+        run: cat pom.xml
