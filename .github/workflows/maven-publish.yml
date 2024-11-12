@@ -1,4 +1,4 @@
-name: api
+name: Deploy to GitHub Packages
 
 on:
   push:
@@ -13,25 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout del código
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Configurar JDK
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. Construir y ejecutar las pruebas con Maven
       - name: Build and Test with Maven
         run: mvn clean verify -DskipTests=true
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Usa el secreto como GITHUB_TOKEN
 
-      # 4. Publicar en GitHub Packages (opcional)
       - name: Publish to GitHub Packages
-        run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml
+        run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml  # Asegura el uso de settings.xml personalizado
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Proporciona el token como variable de entorno

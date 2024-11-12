@@ -3,23 +3,14 @@
         <server>
             <id>github</id>
             <username>martinsecchi</username>
-            <password>${env.GITHUB_TOKEN}</password>
         </server>
     </servers>
-    <mirrors>
-        <mirror>
-            <id>central</id>
-            <mirrorOf>central</mirrorOf>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </mirror>
-    </mirrors>
     <profiles>
         <profile>
             <id>github</id>
             <repositories>
                 <repository>
                     <id>github</id>
-                    <name>GitHub OWNER Apache Maven Packages</name>
                     <url>https://maven.pkg.github.com/martinsecchi/api</url>
                 </repository>
             </repositories>
