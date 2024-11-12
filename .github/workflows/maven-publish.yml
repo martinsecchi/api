@@ -1,4 +1,4 @@
-name: Build and Test with H2 Database
+name: api
 
 on:
   push:
