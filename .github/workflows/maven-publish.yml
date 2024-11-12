@@ -1,10 +1,7 @@
-name: Release on master commit or pull request
+name: Release on master commit
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
@@ -25,10 +22,16 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
+      - name: Create Git Tag
+        run: |
+          TAG_NAME=v1.${{ github.run_number }}
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+
       - name: Create GitHub release
-        if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.create_tag.outputs.TAG_NAME }}
           files: target/api*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
