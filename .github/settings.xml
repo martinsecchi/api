@@ -16,7 +16,7 @@
                         <id>api</id>
                         <repositories>
                             <repository>
-                                <id>github</id>
+                                <id>api</id>
                                 <url>https://maven.pkg.github.com/martinsecchi/api</url>
                                 <releases>
                                     <enabled>true</enabled>
