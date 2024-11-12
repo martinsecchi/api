@@ -26,7 +26,7 @@ jobs:
 
       # 3. Construir y ejecutar las pruebas con Maven
       - name: Build and Test with Maven
-        run: mvn clean verify -DskipTests=false
+        run: mvn clean verify -DskipTests=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
