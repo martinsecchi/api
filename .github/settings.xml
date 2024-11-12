@@ -3,7 +3,7 @@
         <server>
             <id>github</id>
             <username>martinsecchi</username>
-            <password>${all.PERSONAL_ACCESS_TOKEN}</password>
+            <password>${PERSONAL_ACCESS_TOKEN}</password>
         </server>
     </servers>
     <mirrors>
