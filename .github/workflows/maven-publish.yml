@@ -30,7 +30,9 @@ jobs:
           echo "VERSION=${TAG_NAME#v}" >> $GITHUB_ENV
 
       - name: Update version in pom.xml
-        run: mvn versions:set -DnewVersion=${{ env.VERSION }}
+        run: |
+          mvn versions:set -DnewVersion=${{ env.VERSION }} -DgenerateBackupPoms=false
+          # Asegura que el archivo pom.xml se actualice sin generar un archivo .bak
 
       - name: Build with Maven
         run: mvn clean package
