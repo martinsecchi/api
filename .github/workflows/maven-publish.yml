@@ -28,10 +28,10 @@ jobs:
       - name: Build and Test with Maven
         run: mvn clean verify -DskipTests=true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       # 4. Publicar en GitHub Packages (opcional)
       - name: Publish to GitHub Packages
         run: mvn deploy -s $GITHUB_WORKSPACE/.github/settings.xml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
