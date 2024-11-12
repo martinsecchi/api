@@ -23,15 +23,17 @@ jobs:
         run: mvn clean package
 
       - name: Create Git Tag
+        id: create_tag
         run: |
           TAG_NAME=v1.${{ github.run_number }}
           git tag $TAG_NAME
           git push origin $TAG_NAME
+          echo "tag_name=$TAG_NAME" >> $GITHUB_ENV
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.create_tag.outputs.TAG_NAME }}
+          tag_name: ${{ env.tag_name }}
           files: target/api*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
