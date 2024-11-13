@@ -1,4 +1,4 @@
-ARG VERSION=0.0.1
+ARG VERSION=1.63
 
 FROM azul/zulu-openjdk:17
 
