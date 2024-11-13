@@ -65,6 +65,8 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} .
+          # También etiquetar la imagen como 'latest'
+          docker tag ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} ghcr.io/${{ github.repository_owner }}/api:latest
 
       # Log in to GitHub Container Registry
       - name: Log in to GitHub Container Registry
@@ -78,3 +80,5 @@ jobs:
       - name: Push Docker image to GitHub Container Registry
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }}
+          # Push the latest tag as well
+          docker push ghcr.io/${{ github.repository_owner }}/api:latest
