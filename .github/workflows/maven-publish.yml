@@ -31,6 +31,7 @@ jobs:
       - name: Update version in pom.xml
         run: |
           mvn versions:set -DnewVersion=${{ env.VERSION }} -DgenerateBackupPoms=false
+          sed -i "s/ARG VERSION=.*/ARG VERSION=${{ env.VERSION }}/" Dockerfile
           # Asegura que el archivo pom.xml se actualice sin generar un archivo .bak
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
