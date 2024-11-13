@@ -51,7 +51,6 @@ jobs:
 
       - name: Download JAR from GitHub Release
         run: |
-          # Descarga el archivo JAR desde la release de GitHub y lo guarda con un nombre fijo
           curl -L -o api.jar -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://github.com/${{ github.repository_owner }}/releases/download/${{ env.TAG_NAME }}/api-${{ env.VERSION }}.jar"
 
@@ -64,9 +63,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          # Construir la imagen Docker utilizando el archivo JAR descargado (api.jar)
           docker build -t ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} -t ghcr.io/${{ github.repository_owner }}/api:latest .
-
-          # Publicar la imagen en GitHub Container Registry
           docker push ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }}
           docker push ghcr.io/${{ github.repository_owner }}/api:latest
