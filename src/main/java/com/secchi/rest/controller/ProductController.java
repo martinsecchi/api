@@ -1,9 +1,7 @@
 package com.secchi.rest.controller;
 
 import com.secchi.rest.controller.dto.ProductDTO;
-import com.secchi.rest.entities.Product;
 import com.secchi.rest.service.ProductService;
-import com.secchi.rest.util.MakerMapper;
 import com.secchi.rest.util.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/products")
