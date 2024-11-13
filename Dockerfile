@@ -1,11 +1,14 @@
-ARG VERSION=1.63
-
+# Usar una imagen base (Zulu OpenJDK 17)
 FROM azul/zulu-openjdk:17
 
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-COPY target/api-${VERSION}.jar /app/api-${VERSION}.jar
+# Copiar el archivo JAR con nombre fijo
+COPY api.jar /app/api.jar
 
-EXPOSE 9091:9091
+# Exponer el puerto
+EXPOSE 9191
 
-CMD ["java", "-jar", "api-${VERSION}.jar"]
+# Ejecutar el archivo JAR
+CMD ["java", "-jar", "/app/api.jar"]
