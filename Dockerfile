@@ -1,7 +1,6 @@
 FROM azul/zulu-openjdk:17
+# Copiar el archivo JAR generado a la ruta correcta en el contenedor
+COPY target/api-${VERSION}.jar /app.jar
 
-ARG JAR_FILE
-COPY ${JAR_FILE} /app.jar
-
+# Comando para ejecutar el JAR
 ENTRYPOINT ["java", "-jar", "/app.jar"]
-EXPOSE 9191
