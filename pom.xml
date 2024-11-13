@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.secchi</groupId>
     <artifactId>api</artifactId>
-    <version>1.57</version>
+    <version>1.58</version>
     <name>api</name>
     <description>API whit Spring Boot</description>
     <properties>
