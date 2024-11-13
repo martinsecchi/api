@@ -41,6 +41,11 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
+      - name: Verify JAR Build
+        run: |
+          echo "Verifying JAR file"
+          file target/api-${{ env.VERSION }}.jar
+
       - name: Create GitHub Release and Upload JAR
         uses: softprops/action-gh-release@v1
         with:
@@ -53,6 +58,12 @@ jobs:
         run: |
           curl -L -o api.jar -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           "https://github.com/${{ github.repository_owner }}/releases/download/${{ env.TAG_NAME }}/api-${{ env.VERSION }}.jar"
+          ls -lh api.jar
+
+      - name: Verify Downloaded JAR
+        run: |
+          echo "Verifying downloaded JAR file"
+          file api.jar
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
