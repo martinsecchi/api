@@ -38,16 +38,6 @@ jobs:
           git commit -m "Update version to ${{ env.VERSION }}"
           git push origin master
 
-      - name: Update Dockerfile with version
-        run: |
-          # Reemplazar el marcador de versión en el Dockerfile
-          sed -i "s/ARG VERSION=.*/ARG VERSION=${{ env.VERSION }}/" Dockerfile
-          # También asegurarse de que el archivo JAR tenga la versión correcta
-          sed -i "s/api-${{ env.VERSION }}.jar/api-${{ env.VERSION }}.jar/" Dockerfile    
-          
-          
-          
-
       - name: Build with Maven
         run: mvn clean package
 
@@ -72,7 +62,7 @@ jobs:
       # Nueva sección para construir la imagen Docker
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} .
+          docker build --build-arg VERSION=${{ env.VERSION }} -t ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} -t ghcr.io/${{ github.repository_owner }}/api:latest .
           # También etiquetar la imagen como 'latest'
           docker tag ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} ghcr.io/${{ github.repository_owner }}/api:latest
       # Log in to GitHub Container Registry
