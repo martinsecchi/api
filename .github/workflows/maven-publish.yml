@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -28,24 +29,36 @@ jobs:
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "VERSION=${TAG_NAME#v}" >> $GITHUB_ENV
 
-      - name: Update version in pom.xml
+      - name: Update version in pom.xml and Dockerfile
         run: |
+          # Actualiza la versión en el pom.xml
           mvn versions:set -DnewVersion=${{ env.VERSION }} -DgenerateBackupPoms=false
+
+          # Actualiza el archivo Dockerfile con la misma versión
+          sed -i "s/ARG VERSION=.*/ARG VERSION=${{ env.VERSION }}/" Dockerfile
+          sed -i "s/api-0.0.1.jar/api-${{ env.VERSION }}.jar/" Dockerfile
+
+          # Configuración de git para el commit
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add pom.xml
-          git commit -m "Update version to ${{ env.VERSION }}"
+          
+          # Realiza commit de ambos archivos
+          git add pom.xml Dockerfile
+          git commit -m "Update version to ${{ env.VERSION }} in pom.xml and Dockerfile"
           git push origin master
 
       - name: Build with Maven
         run: mvn clean package
 
-      - name: Update Dockerfile with version
-        run: |
-          # Reemplazar la versión en el Dockerfile
-          sed -i "s/ARG VERSION=.*/ARG VERSION=${{ env.VERSION }}/" Dockerfile
-          sed -i "s/api-0.0.1.jar/api-${{ env.VERSION }}.jar/" Dockerfile
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build and Push Docker image
         run: |
           docker build -t ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }} -t ghcr.io/${{ github.repository_owner }}/api:latest .
+          docker push ghcr.io/${{ github.repository_owner }}/api:${{ env.VERSION }}
+          docker push ghcr.io/${{ github.repository_owner }}/api:latest
