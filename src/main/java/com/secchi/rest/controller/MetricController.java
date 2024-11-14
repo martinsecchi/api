@@ -21,13 +21,11 @@ public class MetricController {
 
         // Memoria en MB
         long memoryUsageBytes = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        long memoryUsageMB = memoryUsageBytes; // Convertir a MB
-        metrics.put("memoryUsage", memoryUsageMB);
+        metrics.put("memoryUsage", memoryUsageBytes);
 
         // Tiempo de actividad en horas
         long uptimeMillis = ManagementFactory.getRuntimeMXBean().getUptime();
-        long uptimeHours = uptimeMillis; // Convertir a horas
-        metrics.put("uptime", uptimeHours);
+        metrics.put("uptime", uptimeMillis);
 
         // Número de hilos activos
         metrics.put("activeThreads", Thread.activeCount());
