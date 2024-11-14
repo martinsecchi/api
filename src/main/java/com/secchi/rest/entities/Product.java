@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 
 
 @Entity
-@Cacheable(true)
-@Table(name = "producto")
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -15,7 +14,7 @@ public class Product {
     private String name;
     private BigDecimal price;
     @ManyToOne
-    @JoinColumn(name = "id_fabricante")
+    @JoinColumn(name = "id_product")
     private Maker maker;
 
 

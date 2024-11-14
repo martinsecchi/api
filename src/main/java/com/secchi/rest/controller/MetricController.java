@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/metric")
+@RequestMapping("api")
 public class MetricController {
 
-    @GetMapping("/custom")
+    @GetMapping("/metric")
     public Map<String, Object> getCustom() {
         Map<String, Object> metrics = new HashMap<>();
 
