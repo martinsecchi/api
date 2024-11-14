@@ -21,12 +21,12 @@ public class MetricController {
 
         // Memoria en MB
         long memoryUsageBytes = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        long memoryUsageMB = memoryUsageBytes / (1024 * 1024); // Convertir a MB
+        long memoryUsageMB = memoryUsageBytes; // Convertir a MB
         metrics.put("memoryUsage", memoryUsageMB);
 
         // Tiempo de actividad en horas
         long uptimeMillis = ManagementFactory.getRuntimeMXBean().getUptime();
-        long uptimeHours = uptimeMillis / (1000 * 60 * 60); // Convertir a horas
+        long uptimeHours = uptimeMillis; // Convertir a horas
         metrics.put("uptime", uptimeHours);
 
         // Número de hilos activos
@@ -37,9 +37,9 @@ public class MetricController {
         metrics.put("systemLoadAverage", osBean.getSystemLoadAverage());
 
         // Memoria total y libre de la JVM
-        metrics.put("maxMemory", Runtime.getRuntime().maxMemory() / (1024 * 1024));  // en MB
-        metrics.put("freeMemory", Runtime.getRuntime().freeMemory() / (1024 * 1024)); // en MB
-        metrics.put("totalMemory", Runtime.getRuntime().totalMemory() / (1024 * 1024)); // en MB
+        metrics.put("maxMemory", Runtime.getRuntime().maxMemory());  // en MB
+        metrics.put("freeMemory", Runtime.getRuntime().freeMemory()); // en MB
+        metrics.put("totalMemory", Runtime.getRuntime().totalMemory()); // en MB
 
         // Número de clases cargadas
         ClassLoadingMXBean classLoadingBean = ManagementFactory.getClassLoadingMXBean();
